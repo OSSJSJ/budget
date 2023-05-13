@@ -22,7 +22,6 @@ int addBudget(Budget *s){
     scanf("%*c");
     fgets(s->category, sizeof(s->category), stdin);
     s->category[strcspn(s->category, "\n")] = '\0';
-
     return 1;
 }
 
