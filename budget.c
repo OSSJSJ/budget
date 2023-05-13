@@ -27,9 +27,6 @@ int addBudget(Budget *s){
 }
 
 void readBudget(Budget s){
-    //int sum=s.kor+s.eng+s.math;
-    //double avg=sum/3.0;
-
     printf("%3s | %4d | %3d | %4s | %4s\n",s.name, s.price, s.date, s.type, s.category);
 }
 
