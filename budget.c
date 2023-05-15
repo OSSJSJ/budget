@@ -83,62 +83,42 @@ int selectMenu(){
     printf("2. 추가 ");
     printf("3. 수정 ");
     printf("4. 삭제 ");
+    printf("8. 파일 저장 ");
+    printf("9. 파일 불러오기 ");
     printf("0. 종료 >> ");
     scanf("%d", &menu);
     return menu;
 }
 
-int main(void){
-    Budget *sp[100];
-    int count = 0;
-    int menu;
-    int result=0;
-    int index=0;
-    int ip=1;
-
-    while (1){
-        menu = selectMenu();
-        if (menu == 0){
-            printf("\n=> 원하는 메뉴는? ");
-            scanf("%d",&ip);
-            if(ip==0){
-                break;
-            } 
-            else continue;
-        } 
-        if (menu == 1){
-            if(count > 0) listBudget(sp, index);
-            else printf("데이터가없습니다.\n");
-        }
-        else if (menu == 2){
-            sp[index] = (Budget *)malloc(sizeof(Budget));       
-            count += addBudget(sp[index++]);
-            printf("=> 추가됨!\n");
-        }
-        else if (menu == 3){
-            int no = selectDataNo(sp, index);
-            if(no == 0){     
-                printf("=> 취소됨!\n");
-                continue; 
-            } 
-            updateBudget(sp[no-1]);
-        }
-        else if (menu == 4){
-            int no = selectDataNo(sp, index);
-            if(no == 0){  
-                printf("=> 취소됨!\n"); 
-            }
-            int deleteok;
-            printf("정말로삭제하시겠습니까?(삭제 :1)");
-            scanf("%d", &deleteok);
-            if(deleteok == 1){
-                if(sp[no-1]) free(sp[no-1]);   
-                sp[no-1] = NULL;   
-                count--;
-            }
-            printf("삭제됨!\n");
+void saveData(Budget *s[], char file[20], int count){
+    FILE *fp;
+    fp = fopen(file, "wt");
+    if(count > 0){
+        for(int i = 0; i < count; i++){
+            fprintf(fp, "%d %s %d %s %s\n", s[i]->date, s[i]->name, s[i]->price, s[i]->category, s[i]->type);
         }
     }
-    printf("종료됨!\n");
-    return 0;
+    fclose(fp);
+}
+int loadData(Budget *s[], char file[20]){
+    FILE *fp;
+    int count = 0;
+    if(fp = fopen(file, "rt")){
+        while(!feof(fp)){
+            s[count] = (Budget*)malloc(sizeof(Budget));
+            fscanf(fp, "%d", &s[count]->date);
+            if(feof(fp)){
+                free(s[count]);
+                break;
+            }
+            fscanf(fp, "%s", s[count]->name);
+            fscanf(fp, "%d", &s[count]->price);
+            fscanf(fp, "%s", s[count]->category);
+            fscanf(fp, "%s", s[count]->type);
+            count++;
+        }
+        fclose(fp);
+    }
+    if(count == 0) printf("\n=> '%s' 파일을 찾을수 없습니다\n", file);
+    return count;
 }

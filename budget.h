@@ -4,8 +4,15 @@ typedef struct{
     int date;
     char type[10]; 
     char category[20]; 
-<<<<<<< HEAD
 } Budget;
-=======
-} Budget;
->>>>>>> 935707c07a41ab24d7ae48db61719f3a0ed00f9a
+
+int addBudget(Budget *s);
+void readBudget(Budget s);
+void listBudget(Budget *s[], int count);
+int updateBudget(Budget *s);
+int selectDataNo(Budget *s[], int count);
+int deleteBudget(Budget *s);
+int selectMenu();
+
+void saveData(Budget *s[], char file[20], int count);
+int loadData(Budget *s[], char file[20]);
