@@ -26,7 +26,7 @@ int addBudget(Budget *s){
 }
 
 void readBudget(Budget s){
-    printf("%3s | %4d | %3d | %4s | %4s\n",s.name, s.price, s.date, s.type, s.category);
+    printf("%3s | %3d | %3d | %4s | %4s\n",s.name, s.price, s.date, s.type, s.category);
 }
 
 void listBudget(Budget *s[], int count){  
@@ -76,26 +76,12 @@ int deleteBudget(Budget *s){
     return 1;
 }
 
-int selectMenu(){
-    int menu;
-    printf("\n*** 가계부 ***\n");
-    printf("1. 조회 ");
-    printf("2. 추가 ");
-    printf("3. 수정 ");
-    printf("4. 삭제 ");
-    printf("8. 파일 저장 ");
-    printf("9. 파일 불러오기 ");
-    printf("0. 종료 >> ");
-    scanf("%d", &menu);
-    return menu;
-}
-
 void saveData(Budget *s[], char file[20], int count){
     FILE *fp;
     fp = fopen(file, "wt");
     if(count > 0){
         for(int i = 0; i < count; i++){
-            fprintf(fp, "%d %s %d %s %s\n", s[i]->date, s[i]->name, s[i]->price, s[i]->category, s[i]->type);
+            fprintf(fp, "%d %d %s %s %s\n", s[i]->date, s[i]->price, s[i]->category, s[i]->type, s[i]->name);
         }
     }
     fclose(fp);
@@ -111,14 +97,44 @@ int loadData(Budget *s[], char file[20]){
                 free(s[count]);
                 break;
             }
-            fscanf(fp, "%s", s[count]->name);
             fscanf(fp, "%d", &s[count]->price);
             fscanf(fp, "%s", s[count]->category);
             fscanf(fp, "%s", s[count]->type);
+            fscanf(fp, "%[^\n]", s[count]->name);
             count++;
         }
         fclose(fp);
     }
     if(count == 0) printf("\n=> '%s' 파일을 찾을수 없습니다\n", file);
     return count;
+}
+
+void calculate(Budget *s[], int count){
+    int receipt = 0; //수입
+    int expenditure = 0; //지출
+    for(int i=0; i<count; i++){
+        if(s[i] == NULL) continue;
+        if(strstr(s[i]->type, "수입")){
+            receipt+=s[i]->price;
+        }
+        else if(strstr(s[i]->type, "지출")){
+            expenditure+=s[i]->price;
+        }
+    }
+    printf("총 수입: %d, 총 지출 : %d\n",receipt, expenditure);
+}
+
+int selectMenu(){
+    int menu;
+    printf("\n*** 가계부 ***\n");
+    printf("1. 조회 ");
+    printf("2. 추가 ");
+    printf("3. 수정 ");
+    printf("4. 삭제 ");
+    printf("5. 정산 ");
+    printf("8. 파일 저장 ");
+    printf("9. 파일 불러오기 ");
+    printf("0. 종료 >> ");
+    scanf("%d", &menu);
+    return menu;
 }
