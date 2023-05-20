@@ -47,6 +47,23 @@ int main(void){
                 count--;
             }
             printf("삭제됨!\n");
+        }else if(menu == 6){
+            int search;
+            printf("검색할 종류?\n");
+            printf("1. 이름 2. 날짜 3. 종류\n");
+            scanf("%d", &search);
+            if(search == 1 || search == 3){
+                char name[20];
+                printf("검색할 내용? ");
+                scanf("%s", name);
+                if(search == 1) searchByName(sp, index, name);
+                else if(search == 1) searchByCat(sp, index, name);
+            }else if (search == 2){
+                int date1, date2;
+                printf("검색할 날짜는? ");
+                scanf("%d %d", &date1, &date2);
+                searchByDate(sp, index, date1, date2);
+            }
         }else if(menu == 8){
             if(count > 0){
                 printf("=> 저장할 파일의 이름 : ");

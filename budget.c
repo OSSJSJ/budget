@@ -132,9 +132,50 @@ int selectMenu(){
     printf("3. 수정 ");
     printf("4. 삭제 ");
     printf("5. 정산 ");
+    printf("6. 검색 ");
     printf("8. 파일 저장 ");
     printf("9. 파일 불러오기 ");
     printf("0. 종료 >> ");
     scanf("%d", &menu);
     return menu;
+}
+
+
+void searchByName(Budget *s[], int count, char name[20]){
+    printf("\nNo Name Price Date Type Category\n");  
+    printf("==================================\n");
+    for(int i =0; i <count ; i++){
+        if(s[i] == NULL) continue;     
+        if(strstr(s[i]->name, name)){
+            printf("%2d ", i+1);    
+            readBudget(*s[i]);
+        }
+        printf("\n");
+    }
+}
+
+void searchByDate(Budget *s[], int count, int date1, int date2){
+    printf("\nNo Name Price Date Type Category\n");  
+    printf("==================================\n");
+    for(int i =0; i <count ; i++){
+        if(s[i] == NULL) continue;     
+        if(s[i]->date >= date1 && s[i]->date <= date2){
+            printf("%2d ", i+1);    
+            readBudget(*s[i]);
+        }
+        printf("\n");
+    }
+}
+
+void searchByCat(Budget *s[], int count, char name[20]){
+    printf("\nNo Name Price Date Type Category\n");  
+    printf("==================================\n");
+    for(int i =0; i <count ; i++){
+        if(s[i] == NULL) continue;     
+        if(strstr(s[i]->category, name)){
+            printf("%2d ", i+1);    
+            readBudget(*s[i]);
+        }
+        printf("\n");
+    }
 }

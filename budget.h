@@ -16,3 +16,7 @@ int selectMenu();
 
 void saveData(Budget *s[], char file[20], int count);
 int loadData(Budget *s[], char file[20]);
+
+void searchByName(Budget *s[], int count, char name[20]);
+void searchByDate(Budget *s[], int count, int date1, int date2);
+void searchByCat(Budget *s[], int count, char name[20]);
