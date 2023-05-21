@@ -57,21 +57,21 @@ int main(void){
                 printf("검색할 내용? ");
                 scanf("%s", name);
                 if(search == 1) searchByName(sp, index, name);
-                else if(search == 1) searchByCat(sp, index, name);
+                else if(search == 3) searchByCat(sp, index, name);
             }else if (search == 2){
                 int date1, date2;
                 printf("검색할 날짜는? ");
                 scanf("%d %d", &date1, &date2);
                 searchByDate(sp, index, date1, date2);
             }
-        }else if(menu == 8){
+        }else if(menu == 7){
             if(count > 0){
                 printf("=> 저장할 파일의 이름 : ");
                 scanf("%s", file);
                 saveData(sp, file, count);
                 printf("\n=> '%s' 파일에 데이터를 저장했습니다.\n", file);
             }
-        }else if(menu == 9){
+        }else if(menu == 8){
             printf("=> 불러올 파일의 이름 : ");
             scanf("%s", file);
             for(int i = 0; i < count; i++){
