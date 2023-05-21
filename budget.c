@@ -133,8 +133,8 @@ int selectMenu(){
     printf("4. 삭제 ");
     printf("5. 정산 ");
     printf("6. 검색 ");
-    printf("8. 파일 저장 ");
-    printf("9. 파일 불러오기 ");
+    printf("7. 파일 저장 ");
+    printf("8. 파일 불러오기 ");
     printf("0. 종료 >> ");
     scanf("%d", &menu);
     return menu;
